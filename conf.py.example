@@ -1,0 +1,6 @@
+fromaddr = "from@mail.com"
+toaddr = "to@mail.com"
+mailsrv = "mail.server.com"
+mailpwd = ""
+username = ""
+password = ""
