@@ -18,7 +18,7 @@ def send_email(_msg):
 	 
 	server = smtplib.SMTP(conf.mailsrv, 587)
 	server.starttls()
-	server.login(fromaddr, conf.mailpwd)
+	server.login(conf.fromaddr, conf.mailpwd)
 	text = msg.as_string()
 	server.sendmail(conf.fromaddr, conf.toaddr, text)
 	server.quit()
