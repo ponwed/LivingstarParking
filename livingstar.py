@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import smtplib
 import conf
 from datetime import datetime
@@ -45,7 +46,7 @@ if len(matches) > 1:
 	send_email("Logga in och kolla tillganglig parkering")
 	
 # Write a textfile for logging purposes
-f = open("last_run", "w")
+f = open("/home/pi/bin/livingstar_parking/last_run", "w")
 f.write(datetime.now().strftime("%Y-%m-%d %H:%M"))
 f.close()
 
