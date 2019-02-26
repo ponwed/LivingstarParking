@@ -10,11 +10,11 @@ from re import findall
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
         
-def send_email(_msg, _to):
+def send_email(_msg, _to, _subject):
 	msg = MIMEMultipart()
 	msg['From'] = conf.fromaddr
 	msg['To'] = _to
-	msg['Subject'] = "Parkeringsrapport"
+	msg['Subject'] = _subject
 	 
 	body = _msg
 	msg.attach(MIMEText(body, 'plain'))
@@ -49,10 +49,10 @@ apartment_matches = match_pattern.findall(string_content.encode('utf-8'))
 
 # More than one match should indicate availible parking spaces
 if len(parking_matches) > 1:
-	send_email("Logga in och kolla tillgänglig parkering", conf.toaddr)
+	send_email("Logga in och kolla tillgänglig parkering", conf.toaddr, "Ledig parkering!")
 	
 if len(apartment_matches) > 0:
-	send_email("Logga in och kolla tillgänglig lägenhet", conf.toaddr)
+	send_email("Logga in och kolla tillgänglig lägenhet", conf.toaddr2, "Ledig lägenhet!")
 	
 # Write a textfile for logging purposes
 f = open("/home/pi/bin/livingstar_parking/last_run", "w")
