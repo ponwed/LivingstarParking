@@ -8,10 +8,10 @@ from re import findall
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
         
-def send_email(_msg):
+def send_email(_msg, _to):
 	msg = MIMEMultipart()
 	msg['From'] = conf.fromaddr
-	msg['To'] = conf.toaddr
+	msg['To'] = _to
 	msg['Subject'] = "Parkeringsrapport"
 	 
 	body = _msg
@@ -21,7 +21,7 @@ def send_email(_msg):
 	server.starttls()
 	server.login(conf.fromaddr, conf.mailpwd)
 	text = msg.as_string()
-	server.sendmail(conf.fromaddr, conf.toaddr, text)
+	server.sendmail(conf.fromaddr, _to, text)
 	server.quit()
 
 # Login to site
@@ -43,7 +43,7 @@ matches = findall(r"[pP]ark.*", string_content)
 
 # More than one match should indicate availible parking spaces
 if len(matches) > 1:
-	send_email("Logga in och kolla tillganglig parkering")
+	send_email("Logga in och kolla tillganglig parkering", conf.toaddr)
 	
 # Write a textfile for logging purposes
 f = open("/home/pi/bin/livingstar_parking/last_run", "w")
