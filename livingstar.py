@@ -49,10 +49,10 @@ apartment_matches = match_pattern.findall(string_content.encode('utf-8'))
 
 # More than one match should indicate availible parking spaces
 if len(parking_matches) > 1:
-	send_email("Logga in och kolla tillganglig parkering", conf.toaddr)
+	send_email("Logga in och kolla tillgänglig parkering", conf.toaddr)
 	
 if len(apartment_matches) > 0:
-	send_email("Logga in och kolla tillganglig lagenhet", conf.toaddr)
+	send_email("Logga in och kolla tillgänglig lägenhet", conf.toaddr)
 	
 # Write a textfile for logging purposes
 f = open("/home/pi/bin/livingstar_parking/last_run", "w")
