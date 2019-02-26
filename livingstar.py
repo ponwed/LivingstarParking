@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
 #!/usr/bin/python
 import smtplib
 import conf
+import re
 from datetime import datetime
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEText import MIMEText
@@ -39,14 +41,22 @@ string_content = content_div.text
 driver.quit()
 
 # Check for strings matching "parkering"
-matches = findall(r"[pP]ark.*", string_content)
+parking_matches = findall(r"[pP]ark.*", string_content)
+
+# Check for strings matching "lägenheter"
+match_pattern = re.compile(r"[lL]ägenheter.*", re.UNICODE)
+apartment_matches = match_pattern.findall(string_content.encode('utf-8'))
 
 # More than one match should indicate availible parking spaces
-if len(matches) > 1:
+if len(parking_matches) > 1:
 	send_email("Logga in och kolla tillganglig parkering", conf.toaddr)
+	
+if len(apartment_matches) > 0:
+	send_email("Logga in och kolla tillganglig lagenhet", conf.toaddr)
 	
 # Write a textfile for logging purposes
 f = open("/home/pi/bin/livingstar_parking/last_run", "w")
 f.write(datetime.now().strftime("%Y-%m-%d %H:%M"))
+f.write(string_content.encode('utf-8'))
 f.close()
 
